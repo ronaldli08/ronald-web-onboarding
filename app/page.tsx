@@ -1,13 +1,18 @@
 "use client";
 
-import { FiHeart as HeartIcon } from "react-icons/fi";
-import { GoPaperAirplane as ShareIcon } from "react-icons/go";
-import { LuCircle as ProfileIcon } from "react-icons/lu";
-import { TbMessageCircle } from "react-icons/tb";
+import { useEffect, useState } from "react";
+import { fetchAllRows, PostRow } from "@/actions/supabase/queries/query";
 import { BlueprintLogo } from "@/assets/logos/BlueprintLogo";
-import styles from "./styles.module.css";
+import Post from "@/components/Post";
+import styles from "@/components/styles.module.css";
 
 export default function Home() {
+  const [posts, setPosts] = useState<PostRow[] | null>(null);
+
+  useEffect(() => {
+    fetchAllRows().then(setPosts);
+  }, []);
+
   return (
     <main className={styles.main}>
       <div className={styles.content}>
@@ -21,55 +26,18 @@ export default function Home() {
         </div>
 
         <div className={styles.contentScroll}>
-          <div className={styles.post}>
-            <div className={styles.postHeader}>
-              <div className={styles.profileIcon} />
-              <div>
-                <p><b>neha32</b> at <b>Mission Bit</b></p>
-                <div className={styles.location}>
-                  <p>San Francisco, CA</p> 
-                </div>
-              </div>
-            </div>
-            <img
-              src="https://cdn.britannica.com/51/178051-050-3B786A55/San-Francisco.jpg"
-              alt="San Francisco"
-              className={styles.image}
+          {posts?.map(post => (
+            <Post
+              key={post.id}
+              username={post.user_name}
+              npo={post.npo_name}
+              city={post.Locations.city_name}
+              state={post.Locations.state_abbr}
+              text={post.post_text}
+              image={post.image_link}
+              likeCount={post.num_likes}
             />
-            <p>
-              This past weekend, I taught at Mission Bit. I was working with a
-              group of high school students who were building their first web
-              pages. I really enjoyed being able to help guide 10 students on
-              learning CS fundamentals through a project! They were all really
-              eager to learn, and I&#39;m glad I signed up. Highly recommend to
-              any other software engineers interested in volunteering! Sign-up
-              here: https://missionbit.org/get-involved/volunteer-with-us/
-            </p>
-            <div className={styles.stats}>
-              <p>3 Likes</p>
-              <p>View 2 Comments</p>
-            </div>
-            <div className={styles.actions}>
-              <div className={styles.leftActions}>
-                <HeartIcon size={24} />
-                <TbMessageCircle size={24} />
-              </div>
-              <ShareIcon size={24} />
-            </div>
-            <div className={styles.date}>
-              <p>February 1</p>
-            </div>
-          </div>
-          <div className={styles.post}>
-            <div className={styles.postHeader}>
-              <div className={styles.profileIcon} />
-              <div>
-                <p><b>aiden_ugh</b> at <b>Boys and Girls Club</b></p>
-                <p>Oakland, CA</p>
-              </div>
-            </div>
-            <p>I recently volunteered at my local Boys and Girls Club!</p>
-          </div>
+          ))}
         </div>
       </div>
     </main>
