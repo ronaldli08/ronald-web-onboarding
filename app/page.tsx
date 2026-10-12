@@ -2,8 +2,8 @@
 
 import { FiHeart as HeartIcon } from "react-icons/fi";
 import { GoPaperAirplane as ShareIcon } from "react-icons/go";
-import { LuCircle as ProfileIcon } from "react-icons/lu";
 import { TbMessageCircle } from "react-icons/tb";
+import Image from "next/image";
 import { BlueprintLogo } from "@/assets/logos/BlueprintLogo";
 import styles from "./styles.module.css";
 
@@ -25,15 +25,19 @@ export default function Home() {
             <div className={styles.postHeader}>
               <div className={styles.profileIcon} />
               <div>
-                <p><b>neha32</b> at <b>Mission Bit</b></p>
+                <p>
+                  <b>neha32</b> at <b>Mission Bit</b>
+                </p>
                 <div className={styles.location}>
-                  <p>San Francisco, CA</p> 
+                  <p>San Francisco, CA</p>
                 </div>
               </div>
             </div>
-            <img
-              src="https://cdn.britannica.com/51/178051-050-3B786A55/San-Francisco.jpg"
+            <Image
+              src="https://qahkmyxtgnmzgmynsmne.supabase.co/storage/v1/object/public/pictures/san_francisco.jpg"
               alt="San Francisco"
+              width={800}
+              height={600}
               className={styles.image}
             />
             <p>
@@ -64,8 +68,12 @@ export default function Home() {
             <div className={styles.postHeader}>
               <div className={styles.profileIcon} />
               <div>
-                <p><b>aiden_ugh</b> at <b>Boys and Girls Club</b></p>
-                <p>Oakland, CA</p>
+                <p>
+                  <b>aiden_ugh</b> at <b>Boys and Girls Club</b>
+                </p>
+                <div className={styles.location}>
+                  <p>Oakland, CA</p>
+                </div>
               </div>
             </div>
             <p>I recently volunteered at my local Boys and Girls Club!</p>
